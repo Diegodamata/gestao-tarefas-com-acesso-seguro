@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  pg-docker:
+    image: postgres
+    container_name: taskmanager-postgres
+    environment:
+      POSTGRES_DB: taskmanager
+      POSTGRES_USER: task
+      POSTGRES_PASSWORD: task
+    ports:
+      - 5432:5432
+    networks:
+      - task-network
+
+
+  pgadmin-docker:
+    image: dpage/pgadmin4
+    container_name: taskmanager-pgadmim
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: 1234
+    ports:
+      - 5050:80
+    networks:
+      - task-network
+
+networks:
+  task-network:
+    driver: bridge
+
