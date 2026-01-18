@@ -53,4 +53,15 @@ public class TaskService {
         if (task.getDescription() != null && !task.getDescription().equals(taskEncontrada.getDescription())) taskEncontrada.setDescription(task.getDescription());
         if (task.getStatus() != null && !task.getStatus().equals(taskEncontrada.getStatus())) taskEncontrada.setStatus(task.getStatus());
     }
+
+    public void delete(Long id, Long task_id){
+        User user = userService.findById(id);
+
+        Task taskEncontrada = user.getTasks().stream().
+                filter(t -> t.getId().equals(task_id))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Task not found!"));
+
+        taskRepository.delete(taskEncontrada);
+    }
 }
