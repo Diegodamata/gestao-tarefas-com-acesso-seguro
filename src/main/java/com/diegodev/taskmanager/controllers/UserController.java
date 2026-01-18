@@ -2,6 +2,7 @@ package com.diegodev.taskmanager.controllers;
 
 import com.diegodev.taskmanager.controllers.dtos.mappers.UserMapper;
 import com.diegodev.taskmanager.controllers.dtos.reponses.UserResponseDto;
+import com.diegodev.taskmanager.controllers.dtos.reponses.UserUpdateResponseDto;
 import com.diegodev.taskmanager.controllers.dtos.requests.UserRequestDto;
 import com.diegodev.taskmanager.domain.User;
 import com.diegodev.taskmanager.services.UserService;
@@ -44,5 +45,16 @@ public class UserController {
                 .toListDto(userService.read());
 
         return ResponseEntity.ok().body(listDto);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserUpdateResponseDto> update(@RequestBody UserRequestDto userRequestDto,
+                                                        @PathVariable("id") Long id){
+
+        User userUpdate = userService
+                .update(userMapper.toEntity(userRequestDto), id);
+
+        return ResponseEntity.ok().body(userMapper
+                .toUpdateDto(userUpdate));
     }
 }
