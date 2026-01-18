@@ -1,9 +1,9 @@
 package com.diegodev.taskmanager.controllers;
 
-import com.diegodev.taskmanager.controllers.dtos.mappers.UserMapper;
-import com.diegodev.taskmanager.controllers.dtos.reponses.UserResponseDto;
-import com.diegodev.taskmanager.controllers.dtos.reponses.UserUpdateResponseDto;
-import com.diegodev.taskmanager.controllers.dtos.requests.UserRequestDto;
+import com.diegodev.taskmanager.controllers.mappers.user.UserMapper;
+import com.diegodev.taskmanager.controllers.dtos.user.responses.UserResponseDto;
+import com.diegodev.taskmanager.controllers.dtos.user.responses.UserUpdateResponseDto;
+import com.diegodev.taskmanager.controllers.dtos.user.requests.UserRequestDto;
 import com.diegodev.taskmanager.domain.User;
 import com.diegodev.taskmanager.services.UserService;
 import org.springframework.http.ResponseEntity;
@@ -27,16 +27,16 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserResponseDto> created(@RequestBody UserRequestDto userRequestDto){
-        UserResponseDto dto = userMapper
-                .toDto(userService.created(userMapper.toEntity(userRequestDto)));
+        User user = userService
+                .created(userMapper.toEntity(userRequestDto));
 
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/users")
-                .buildAndExpand(dto.id())
+                .buildAndExpand(user.getId())
                 .toUri();
 
-        return ResponseEntity.created(uri).body(dto);
+        return ResponseEntity.created(uri).body(userMapper.toDto(user));
     }
 
     @GetMapping

@@ -1,8 +1,8 @@
-package com.diegodev.taskmanager.controllers.dtos.mappers;
+package com.diegodev.taskmanager.controllers.mappers.user;
 
-import com.diegodev.taskmanager.controllers.dtos.reponses.UserResponseDto;
-import com.diegodev.taskmanager.controllers.dtos.reponses.UserUpdateResponseDto;
-import com.diegodev.taskmanager.controllers.dtos.requests.UserRequestDto;
+import com.diegodev.taskmanager.controllers.dtos.user.responses.UserResponseDto;
+import com.diegodev.taskmanager.controllers.dtos.user.responses.UserUpdateResponseDto;
+import com.diegodev.taskmanager.controllers.dtos.user.requests.UserRequestDto;
 import com.diegodev.taskmanager.domain.User;
 import org.mapstruct.Mapper;
 
