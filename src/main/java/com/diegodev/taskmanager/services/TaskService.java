@@ -5,6 +5,8 @@ import com.diegodev.taskmanager.domain.User;
 import com.diegodev.taskmanager.repositories.TaskRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TaskService {
 
@@ -22,5 +24,11 @@ public class TaskService {
         task.setUser(user);
 
         return taskRepository.save(task);
+    }
+
+    public List<Task> read(Long id){
+        User user = userService.findById(id);
+
+        return user.getTasks();
     }
 }

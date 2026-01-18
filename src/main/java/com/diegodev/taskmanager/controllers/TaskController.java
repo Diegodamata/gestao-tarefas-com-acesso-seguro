@@ -5,11 +5,13 @@ import com.diegodev.taskmanager.controllers.dtos.task.responses.TaskResponseDto;
 import com.diegodev.taskmanager.controllers.mappers.task.TaskMapper;
 import com.diegodev.taskmanager.domain.Task;
 import com.diegodev.taskmanager.services.TaskService;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/{id}/tasks")
@@ -36,5 +38,12 @@ public class TaskController {
                 .toUri();
 
         return ResponseEntity.created(uri).body(taskMapper.toDto(task));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<TaskResponseDto>> read(@PathVariable("id") Long id){
+        List<Task> tasks = taskService.read(id);
+
+        return ResponseEntity.ok().body(taskMapper.toListDto(tasks));
     }
 }
