@@ -4,6 +4,8 @@ import com.diegodev.taskmanager.domain.User;
 import com.diegodev.taskmanager.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -13,7 +15,11 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public void created(User user){
-        userRepository.save(user);
+    public User created(User user){
+        return userRepository.save(user);
+    }
+
+    public List<User> read(){
+        return userRepository.findAll();
     }
 }
