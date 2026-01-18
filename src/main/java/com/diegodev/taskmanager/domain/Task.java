@@ -21,6 +21,7 @@ public class Task {
 
     private String description;
 
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     @JoinColumn(name = "user_id")

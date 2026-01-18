@@ -6,16 +6,13 @@ import com.diegodev.taskmanager.controllers.mappers.task.TaskMapper;
 import com.diegodev.taskmanager.domain.Task;
 import com.diegodev.taskmanager.services.TaskService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 
 @RestController
-@RequestMapping("tasks")
+@RequestMapping("/{id}/tasks")
 public class TaskController {
 
     private final TaskService taskService;
@@ -27,10 +24,10 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<TaskResponseDto> created(@RequestBody TaskRequestDto taskRequestDto){
+    public ResponseEntity<TaskResponseDto> created(@RequestBody TaskRequestDto taskRequestDto, @PathVariable("id") Long id){
 
         Task task = taskService
-                .created(taskMapper.toEntity(taskRequestDto));
+                .created(taskMapper.toEntity(taskRequestDto), id);
 
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
