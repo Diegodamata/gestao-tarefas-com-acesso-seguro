@@ -42,4 +42,8 @@ public class UserService {
         if (user.getEmail() != null && !user.getEmail().equals(userEncontrado.getEmail())) userEncontrado.setEmail(user.getEmail());
         if (user.getPassword() != null && !user.getPassword().equals(userEncontrado.getPassword())) userEncontrado.setPassword(user.getPassword());
     }
+
+    public void delete(Long id){
+        userRepository.delete(findById(id));
+    }
 }
