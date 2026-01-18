@@ -23,7 +23,7 @@ public class Task {
 
     private Status status;
 
-    @Column(name = "user_id")
+    @JoinColumn(name = "user_id")
     @ManyToOne
     private User user;
 
