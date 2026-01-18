@@ -5,7 +5,6 @@ import com.diegodev.taskmanager.controllers.dtos.task.responses.TaskResponseDto;
 import com.diegodev.taskmanager.controllers.mappers.task.TaskMapper;
 import com.diegodev.taskmanager.domain.Task;
 import com.diegodev.taskmanager.services.TaskService;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -45,5 +44,16 @@ public class TaskController {
         List<Task> tasks = taskService.read(id);
 
         return ResponseEntity.ok().body(taskMapper.toListDto(tasks));
+    }
+
+    @PutMapping("/{task_id}")
+    public ResponseEntity<TaskResponseDto> update(@RequestBody TaskRequestDto taskRequestDto,
+                                                        @PathVariable("id") Long id,
+                                                        @PathVariable("task_id") Long task_id){
+
+        Task task = taskService.update(taskMapper
+                .toEntity(taskRequestDto), id, task_id);
+
+        return ResponseEntity.ok().body(taskMapper.toDto(task));
     }
 }
