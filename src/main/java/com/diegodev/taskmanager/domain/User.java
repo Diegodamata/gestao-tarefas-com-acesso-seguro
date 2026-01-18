@@ -2,6 +2,8 @@ package com.diegodev.taskmanager.domain;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -9,11 +11,14 @@ import java.util.Objects;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private String email;
     private String password;
+
+    @OneToMany(mappedBy = "user")
+    private List<Task> tasks = new ArrayList<>();
 
     public User(){
     }
@@ -48,6 +53,10 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
     }
 
     @Override
