@@ -46,6 +46,14 @@ public class TaskController {
         return ResponseEntity.ok().body(taskMapper.toListDto(tasks));
     }
 
+    @GetMapping
+    public ResponseEntity<TaskResponseDto> findByTitle(@RequestParam(value = "title", required = false) String title,
+                                                       @PathVariable("id") Long id){
+        Task task = taskService.findByTitle(title, id);
+
+        return ResponseEntity.ok().body(taskMapper.toDto(task));
+    }
+
     @PutMapping("/{task_id}")
     public ResponseEntity<TaskResponseDto> update(@RequestBody TaskRequestDto taskRequestDto,
                                                         @PathVariable("id") Long id,

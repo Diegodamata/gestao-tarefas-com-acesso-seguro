@@ -6,9 +6,6 @@ import com.diegodev.taskmanager.repositories.TaskRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static java.util.Locale.filter;
 
 @Service
 public class TaskService {
@@ -33,6 +30,13 @@ public class TaskService {
         User user = userService.findById(id);
 
         return user.getTasks();
+    }
+
+    public Task findByTitle(String title, Long id){
+        User user = userService.findById(id);
+
+        return taskRepository.findByTitleContainingIgnoreCaseAndUser(title, user)
+                .orElseThrow(() -> new RuntimeException("Task not found!"));
     }
 
     public Task update(Task task, Long id, Long task_id){
