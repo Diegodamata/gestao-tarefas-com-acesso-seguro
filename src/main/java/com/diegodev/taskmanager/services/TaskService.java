@@ -3,6 +3,9 @@ package com.diegodev.taskmanager.services;
 import com.diegodev.taskmanager.domain.Task;
 import com.diegodev.taskmanager.domain.User;
 import com.diegodev.taskmanager.repositories.TaskRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,10 +29,13 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
-    public List<Task> read(Long id){
+    public Page<Task> read(Long id, int page, int size){
         User user = userService.findById(id);
+        List<Task> userTasks = user.getTasks();
 
-        return user.getTasks();
+        Pageable pageable = PageRequest.of(page, size);
+
+        return taskRepository.findAll(userTasks, pageable);
     }
 
     public Task findByTitle(String title, Long id){

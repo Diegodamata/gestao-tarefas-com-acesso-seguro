@@ -5,12 +5,12 @@ import com.diegodev.taskmanager.controllers.dtos.task.responses.TaskResponseDto;
 import com.diegodev.taskmanager.controllers.mappers.task.TaskMapper;
 import com.diegodev.taskmanager.domain.Task;
 import com.diegodev.taskmanager.services.TaskService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping("/{id}/tasks")
@@ -40,10 +40,12 @@ public class TaskController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TaskResponseDto>> read(@PathVariable("id") Long id){
-        List<Task> tasks = taskService.read(id);
+    public ResponseEntity<Page<TaskResponseDto>> read(@PathVariable("id") Long id,
+                                                      @RequestParam(defaultValue = "0") int page,
+                                                      @RequestParam(defaultValue = "10") int size){
+        Page<Task> taskPage = taskService.read(id, page, size);
 
-        return ResponseEntity.ok().body(taskMapper.toListDto(tasks));
+        return ResponseEntity.ok().body(taskPage.map(taskMapper::toDto));
     }
 
     @GetMapping
