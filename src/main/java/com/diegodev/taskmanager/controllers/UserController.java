@@ -6,6 +6,7 @@ import com.diegodev.taskmanager.controllers.dtos.user.responses.UserUpdateRespon
 import com.diegodev.taskmanager.controllers.dtos.user.requests.UserRequestDto;
 import com.diegodev.taskmanager.domain.User;
 import com.diegodev.taskmanager.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -26,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponseDto> created(@RequestBody UserRequestDto userRequestDto){
+    public ResponseEntity<UserResponseDto> created(@RequestBody @Valid UserRequestDto userRequestDto){
         User user = userService
                 .created(userMapper.toEntity(userRequestDto));
 
@@ -48,7 +49,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserUpdateResponseDto> update(@RequestBody UserRequestDto userRequestDto,
+    public ResponseEntity<UserUpdateResponseDto> update(@RequestBody @Valid UserRequestDto userRequestDto,
                                                         @PathVariable("id") Long id){
 
         User userUpdate = userService

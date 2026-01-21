@@ -29,7 +29,6 @@ public class UserService {
     }
 
     public User update(User user, Long id){
-
         User userEncontrado = findById(id);
 
         updateUser(userEncontrado, user);

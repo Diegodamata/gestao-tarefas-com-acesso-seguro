@@ -5,6 +5,7 @@ import com.diegodev.taskmanager.controllers.dtos.task.responses.TaskResponseDto;
 import com.diegodev.taskmanager.controllers.mappers.task.TaskMapper;
 import com.diegodev.taskmanager.domain.Task;
 import com.diegodev.taskmanager.services.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<TaskResponseDto> created(@RequestBody TaskRequestDto taskRequestDto, @PathVariable("id") Long id){
+    public ResponseEntity<TaskResponseDto> created(@RequestBody @Valid TaskRequestDto taskRequestDto, @PathVariable("id") Long id){
 
         Task task = taskService
                 .created(taskMapper.toEntity(taskRequestDto), id);
@@ -47,17 +48,17 @@ public class TaskController {
 
         return ResponseEntity.ok().body(taskPage.map(taskMapper::toDto));
     }
-
-    @GetMapping
-    public ResponseEntity<TaskResponseDto> findByTitle(@RequestParam(value = "title", required = false) String title,
-                                                       @PathVariable("id") Long id){
-        Task task = taskService.findByTitle(title, id);
-
-        return ResponseEntity.ok().body(taskMapper.toDto(task));
-    }
+//
+//    @GetMapping
+//    public ResponseEntity<TaskResponseDto> findByTitle(@RequestParam(value = "title", required = false) String title,
+//                                                       @PathVariable("id") Long id){
+//        Task task = taskService.findByTitle(title, id);
+//
+//        return ResponseEntity.ok().body(taskMapper.toDto(task));
+//    }
 
     @PutMapping("/{task_id}")
-    public ResponseEntity<TaskResponseDto> update(@RequestBody TaskRequestDto taskRequestDto,
+    public ResponseEntity<TaskResponseDto> update(@RequestBody @Valid TaskRequestDto taskRequestDto,
                                                         @PathVariable("id") Long id,
                                                         @PathVariable("task_id") Long task_id){
 
