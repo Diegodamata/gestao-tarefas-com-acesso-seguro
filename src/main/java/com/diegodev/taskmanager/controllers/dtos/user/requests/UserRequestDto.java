@@ -8,7 +8,8 @@ public record UserRequestDto(
         @NotBlank(message = "Campo nome não pode estar vazio!")
         String name,
 
-        @Email(message = "Campo email não pode estar vazio!")
+        @NotBlank(message = "Campo email não pode estar vazio!")
+        @Email
         String email,
 
         @NotBlank(message = "Campo senha não pode estar vazio!")
