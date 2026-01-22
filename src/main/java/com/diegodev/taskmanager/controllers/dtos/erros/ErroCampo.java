@@ -1,4 +1,4 @@
 package com.diegodev.taskmanager.controllers.dtos.erros;
 
-public record ErroCampo(String campo, String msg) {
+public record ErroCampo(String campo, String message) {
 }

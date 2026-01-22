@@ -2,6 +2,7 @@ package com.diegodev.taskmanager.services;
 
 import com.diegodev.taskmanager.domain.User;
 import com.diegodev.taskmanager.repositories.UserRepository;
+import com.diegodev.taskmanager.validator.UserValidator;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,12 +11,15 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserValidator userValidator;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, UserValidator userValidator) {
         this.userRepository = userRepository;
+        this.userValidator = userValidator;
     }
 
     public User created(User user){
+        userValidator.validar(user);
         return userRepository.save(user);
     }
 

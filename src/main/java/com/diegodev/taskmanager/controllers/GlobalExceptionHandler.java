@@ -2,6 +2,7 @@ package com.diegodev.taskmanager.controllers;
 
 import com.diegodev.taskmanager.controllers.dtos.erros.ErroCampo;
 import com.diegodev.taskmanager.controllers.dtos.erros.ErroResposta;
+import com.diegodev.taskmanager.exceptions.RegistroDuplicadoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -23,5 +24,11 @@ public class GlobalExceptionHandler {
                 .map(fieldError -> new ErroCampo(fieldError.getField(), fieldError.getDefaultMessage()))
                 .toList();
         return new ErroResposta(HttpStatus.UNPROCESSABLE_ENTITY.value(), "Erro de validação", erroCampos);
+    }
+
+    @ExceptionHandler(RegistroDuplicadoException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErroResposta handleRegistroDuplicadoException(RegistroDuplicadoException e){
+        return ErroResposta.conflict(e.getMessage());
     }
 }
