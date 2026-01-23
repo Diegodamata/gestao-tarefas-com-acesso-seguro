@@ -3,6 +3,7 @@ package com.diegodev.taskmanager.controllers;
 import com.diegodev.taskmanager.controllers.dtos.erros.ErroCampo;
 import com.diegodev.taskmanager.controllers.dtos.erros.ErroResposta;
 import com.diegodev.taskmanager.exceptions.RegistroDuplicadoException;
+import com.diegodev.taskmanager.exceptions.RegistroNaoEncontradoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -30,5 +31,11 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErroResposta handleRegistroDuplicadoException(RegistroDuplicadoException e){
         return ErroResposta.conflict(e.getMessage());
+    }
+
+    @ExceptionHandler(RegistroNaoEncontradoException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErroResposta handleRegistroNaoEncontradoException(RegistroNaoEncontradoException e){
+        return ErroResposta.notFound(e.getMessage());
     }
 }

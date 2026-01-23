@@ -1,6 +1,7 @@
 package com.diegodev.taskmanager.services;
 
 import com.diegodev.taskmanager.domain.User;
+import com.diegodev.taskmanager.exceptions.RegistroNaoEncontradoException;
 import com.diegodev.taskmanager.repositories.UserRepository;
 import com.diegodev.taskmanager.validator.UserValidator;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class UserService {
 
     public User findById(Long id){
         return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found!"));
+                .orElseThrow(() -> new RegistroNaoEncontradoException("User not found!"));
     }
 
     public User update(User user, Long id){
