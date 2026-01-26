@@ -13,4 +13,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     Optional<Task> findByTitleContainingIgnoreCaseAndUser(String title, User user);
 
     Page<Task> findByUser(User user, Pageable pageable);
+
+    boolean existsByTitleContainingIgnoreCaseAndUser(String title, User user);
 }

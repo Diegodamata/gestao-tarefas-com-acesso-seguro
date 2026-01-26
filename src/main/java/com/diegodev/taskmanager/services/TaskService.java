@@ -2,7 +2,9 @@ package com.diegodev.taskmanager.services;
 
 import com.diegodev.taskmanager.domain.Task;
 import com.diegodev.taskmanager.domain.User;
+import com.diegodev.taskmanager.exceptions.RegistroNaoEncontradoException;
 import com.diegodev.taskmanager.repositories.TaskRepository;
+import com.diegodev.taskmanager.validator.TaskValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -12,17 +14,20 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
     private final UserService userService;
+    private final TaskValidator taskValidator;
 
-    public TaskService(TaskRepository taskRepository, UserService userService) {
+    public TaskService(TaskRepository taskRepository, UserService userService, TaskValidator taskValidator) {
         this.taskRepository = taskRepository;
         this.userService = userService;
+        this.taskValidator = taskValidator;
     }
 
     public Task created(Task task, Long id){
         User user = userService.findById(id);
 
-        task.setUser(user);
+        taskValidator.validar(task.getTitle(), user);
 
+        task.setUser(user);
         return taskRepository.save(task);
     }
 
@@ -36,7 +41,7 @@ public class TaskService {
         User user = userService.findById(id);
 
         return taskRepository.findByTitleContainingIgnoreCaseAndUser(title, user)
-                .orElseThrow(() -> new RuntimeException("Task not found!"));
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Task not found!"));
     }
 
     public Task update(Task task, Long id, Long task_id){
@@ -45,7 +50,7 @@ public class TaskService {
         Task taskEncontrada = user.getTasks().stream().
                 filter(t -> t.getId().equals(task_id))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Task not found!"));
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Task not found!"));
 
         updateTask(task, taskEncontrada);
 
@@ -64,7 +69,7 @@ public class TaskService {
         Task taskEncontrada = user.getTasks().stream().
                 filter(t -> t.getId().equals(task_id))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Task not found!"));
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Task not found!"));
 
         taskRepository.delete(taskEncontrada);
     }
