@@ -41,7 +41,7 @@ public class TaskService {
         User user = userService.findById(id);
 
         return taskRepository.findByTitleContainingIgnoreCaseAndUser(title, user)
-                .orElseThrow(() -> new RegistroNaoEncontradoException("Task not found!"));
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Task not found"));
     }
 
     public Task update(Task task, Long id, Long task_id){

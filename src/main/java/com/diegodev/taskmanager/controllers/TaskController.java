@@ -41,21 +41,23 @@ public class TaskController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<TaskResponseDto>> read(@PathVariable("id") Long id,
+    public ResponseEntity<Page<TaskResponseDto>> readingByTasksOrTitle(@PathVariable("id") Long id,
                                                       @RequestParam(defaultValue = "0") int page,
                                                       @RequestParam(defaultValue = "10") int size){
-        Page<Task> taskPage = taskService.read(id, page, size);
 
-        return ResponseEntity.ok().body(taskPage.map(taskMapper::toDto));
+        Page<Task> pageTasks = taskService.read(id, page, size);
+
+        return ResponseEntity.ok().body(pageTasks.map(taskMapper::toDto));
     }
-//
-//    @GetMapping
-//    public ResponseEntity<TaskResponseDto> findByTitle(@RequestParam(value = "title", required = false) String title,
-//                                                       @PathVariable("id") Long id){
-//        Task task = taskService.findByTitle(title, id);
-//
-//        return ResponseEntity.ok().body(taskMapper.toDto(task));
-//    }
+
+    @GetMapping("/titles")
+    public ResponseEntity<TaskResponseDto> readingByTitle(@PathVariable("id") Long id,
+                                                       @RequestParam(value = "title", required = true) String title){
+
+        Task task = taskService.findByTitle(title, id);
+
+        return ResponseEntity.ok().body(taskMapper.toDto(task));
+    }
 
     @PutMapping("/{task_id}")
     public ResponseEntity<TaskResponseDto> update(@RequestBody @Valid TaskRequestDto taskRequestDto,
