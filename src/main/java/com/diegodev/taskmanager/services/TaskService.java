@@ -2,6 +2,7 @@ package com.diegodev.taskmanager.services;
 
 import com.diegodev.taskmanager.domain.Task;
 import com.diegodev.taskmanager.domain.User;
+import com.diegodev.taskmanager.domain.enums.Status;
 import com.diegodev.taskmanager.exceptions.RegistroNaoEncontradoException;
 import com.diegodev.taskmanager.repositories.TaskRepository;
 import com.diegodev.taskmanager.validator.TaskValidator;
@@ -31,7 +32,7 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
-    public Page<Task> read(Long id, int page, int size){
+    public Page<Task> readingByTasks(Long id, int page, int size){
         User user = userService.findById(id);
 
         return taskRepository.findByUser(user, PageRequest.of(page, size));
@@ -41,7 +42,13 @@ public class TaskService {
         User user = userService.findById(id);
 
         return taskRepository.findByTitleContainingIgnoreCaseAndUser(title, user)
-                .orElseThrow(() -> new RegistroNaoEncontradoException("Task not found"));
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Tarefa não encontrada com esse título: " + title));
+    }
+
+    public Page<Task> findByStatus(Status status, Long id, int page, int size){
+        User user = userService.findById(id);
+
+        return taskRepository.findByStatusAndUser(status, user, PageRequest.of(page, size));
     }
 
     public Task update(Task task, Long id, Long task_id){
@@ -50,7 +57,7 @@ public class TaskService {
         Task taskEncontrada = user.getTasks().stream().
                 filter(t -> t.getId().equals(task_id))
                 .findFirst()
-                .orElseThrow(() -> new RegistroNaoEncontradoException("Task not found!"));
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Tarefa não encontrada!"));
 
         updateTask(task, taskEncontrada);
 
@@ -69,7 +76,7 @@ public class TaskService {
         Task taskEncontrada = user.getTasks().stream().
                 filter(t -> t.getId().equals(task_id))
                 .findFirst()
-                .orElseThrow(() -> new RegistroNaoEncontradoException("Task not found!"));
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Tarefa não encontrada!"));
 
         taskRepository.delete(taskEncontrada);
     }

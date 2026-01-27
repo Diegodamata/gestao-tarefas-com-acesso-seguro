@@ -4,6 +4,7 @@ import com.diegodev.taskmanager.controllers.dtos.task.requests.TaskRequestDto;
 import com.diegodev.taskmanager.controllers.dtos.task.responses.TaskResponseDto;
 import com.diegodev.taskmanager.controllers.mappers.task.TaskMapper;
 import com.diegodev.taskmanager.domain.Task;
+import com.diegodev.taskmanager.domain.enums.Status;
 import com.diegodev.taskmanager.services.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -41,11 +42,19 @@ public class TaskController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<TaskResponseDto>> readingByTasksOrTitle(@PathVariable("id") Long id,
+    public ResponseEntity<Page<TaskResponseDto>> readingByTasksOrStatus(@PathVariable("id") Long id,
+                                                      @RequestParam(required = false) String status,
                                                       @RequestParam(defaultValue = "0") int page,
                                                       @RequestParam(defaultValue = "10") int size){
 
-        Page<Task> pageTasks = taskService.read(id, page, size);
+
+        Page<Task> pageTasks;
+        if (status != null && !status.isBlank()){
+            pageTasks = taskService.findByStatus(Status.from(status), id, page, size);
+        }
+        else {
+            pageTasks = taskService.readingByTasks(id, page, size);
+        }
 
         return ResponseEntity.ok().body(pageTasks.map(taskMapper::toDto));
     }
@@ -54,7 +63,8 @@ public class TaskController {
     public ResponseEntity<TaskResponseDto> readingByTitle(@PathVariable("id") Long id,
                                                        @RequestParam(value = "title", required = true) String title){
 
-        Task task = taskService.findByTitle(title, id);
+
+         Task task = taskService.findByTitle(title, id);
 
         return ResponseEntity.ok().body(taskMapper.toDto(task));
     }

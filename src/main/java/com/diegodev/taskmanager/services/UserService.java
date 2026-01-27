@@ -30,7 +30,7 @@ public class UserService {
 
     public User findById(Long id){
         return userRepository.findById(id)
-                .orElseThrow(() -> new RegistroNaoEncontradoException("User not found!"));
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Usuário não encontrado!"));
     }
 
     public User update(User user, Long id){
