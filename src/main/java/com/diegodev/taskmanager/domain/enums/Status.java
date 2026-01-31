@@ -1,8 +1,8 @@
 package com.diegodev.taskmanager.domain.enums;
 
 public enum Status {
-    PENDING,
-    DONE;
+    PENDENTE,
+    FEITO;
 
     public static Status from(String status){
         return Status.valueOf(status.toUpperCase());

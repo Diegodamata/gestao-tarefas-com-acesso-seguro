@@ -22,8 +22,8 @@ public class UserValidator {
 
     private boolean userExist(User user){
         return userRepository
-                .existsByNameAndEmailAndPassword(
-                        user.getName(),
+                .existsByLoginAndEmailAndPassword(
+                        user.getLogin(),
                         user.getEmail(),
                         user.getPassword());
     }

@@ -2,9 +2,7 @@ package com.diegodev.taskmanager.domain;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "tb_user")
@@ -21,6 +19,9 @@ public class User {
     private String email;
 
     private String password;
+
+    @ManyToMany(mappedBy = "users")
+    private Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
     private List<Task> tasks = new ArrayList<>();
@@ -58,6 +59,10 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
     }
 
     public List<Task> getTasks() {

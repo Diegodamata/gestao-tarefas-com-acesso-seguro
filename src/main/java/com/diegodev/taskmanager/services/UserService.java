@@ -42,7 +42,7 @@ public class UserService {
     }
 
     private void updateUser(User userEncontrado, User user) {
-        if (user.getName() != null && !user.getName().equals(userEncontrado.getName())) userEncontrado.setName(user.getName());
+        if (user.getLogin() != null && !user.getLogin().equals(userEncontrado.getLogin())) userEncontrado.setLogin(user.getLogin());
         if (user.getEmail() != null && !user.getEmail().equals(userEncontrado.getEmail())) userEncontrado.setEmail(user.getEmail());
         if (user.getPassword() != null && !user.getPassword().equals(userEncontrado.getPassword())) userEncontrado.setPassword(user.getPassword());
     }
