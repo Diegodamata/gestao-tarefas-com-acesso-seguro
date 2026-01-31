@@ -14,6 +14,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(length = 50, unique = true, nullable = false)
     private String name;
 
     @ManyToMany

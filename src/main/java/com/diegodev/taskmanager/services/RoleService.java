@@ -4,6 +4,8 @@ import com.diegodev.taskmanager.domain.Role;
 import com.diegodev.taskmanager.repositories.RoleRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RoleService {
 
@@ -16,5 +18,9 @@ public class RoleService {
     public Role created(Role role){
         role.setName(role.getName().toUpperCase());
         return roleRepository.save(role);
+    }
+
+    public List<Role> reading(){
+        return roleRepository.findAll();
     }
 }

@@ -6,13 +6,11 @@ import com.diegodev.taskmanager.controllers.mappers.role.RoleMapper;
 import com.diegodev.taskmanager.domain.Role;
 import com.diegodev.taskmanager.services.RoleService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/roles")
@@ -38,5 +36,13 @@ public class RoleController {
                 .toUri();
 
         return ResponseEntity.created(uri).body(roleMapper.toDto(role));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<RoleResponseDto>> reading(){
+
+        List<Role> roles = roleService.reading();
+
+        return ResponseEntity.ok().body(roleMapper.toListDto(roles));
     }
 }
