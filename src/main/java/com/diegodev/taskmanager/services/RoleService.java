@@ -1,6 +1,7 @@
 package com.diegodev.taskmanager.services;
 
 import com.diegodev.taskmanager.domain.Role;
+import com.diegodev.taskmanager.exceptions.RegistroNaoEncontradoException;
 import com.diegodev.taskmanager.repositories.RoleRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,5 +23,22 @@ public class RoleService {
 
     public List<Role> reading(){
         return roleRepository.findAll();
+    }
+
+    public Role findById(Long id){
+        return roleRepository.findById(id)
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Role não encontrada!"));
+    }
+
+    public Role update(Role role, Long id){
+        Role roleEncontrada = findById(id);
+
+        updateRole(roleEncontrada, role);
+
+        return roleRepository.save(roleEncontrada);
+    }
+
+    private void updateRole(Role roleEncontrada, Role role){
+        if (role.getName() != null) roleEncontrada.setName(role.getName());
     }
 }

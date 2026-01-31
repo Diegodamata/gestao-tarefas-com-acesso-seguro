@@ -45,4 +45,12 @@ public class RoleController {
 
         return ResponseEntity.ok().body(roleMapper.toListDto(roles));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<RoleResponseDto> update(@RequestBody RoleRequestDto roleRequestDto,
+                                                  @PathVariable("id") Long id){
+        Role roleUpdate = roleService.update(roleMapper.toEntity(roleRequestDto), id);
+
+        return ResponseEntity.ok().body(roleMapper.toDto(roleUpdate));
+    }
 }
