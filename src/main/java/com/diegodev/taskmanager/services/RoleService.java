@@ -41,4 +41,8 @@ public class RoleService {
     private void updateRole(Role roleEncontrada, Role role){
         if (role.getName() != null) roleEncontrada.setName(role.getName());
     }
+
+    public void delete(Long id){
+        roleRepository.delete(findById(id));
+    }
 }

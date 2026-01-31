@@ -53,4 +53,10 @@ public class RoleController {
 
         return ResponseEntity.ok().body(roleMapper.toDto(roleUpdate));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id){
+        roleService.delete(id);
+        return ResponseEntity.ok().build();
+    }
 }
