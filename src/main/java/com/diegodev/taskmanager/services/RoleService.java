@@ -30,6 +30,11 @@ public class RoleService {
                 .orElseThrow(() -> new RegistroNaoEncontradoException("Role não encontrada!"));
     }
 
+    public Role findByName(String name){
+        return roleRepository.findByNameIgnoreCase(name)
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Role não encontrada!"));
+    }
+
     public Role update(Role role, Long id){
         Role roleEncontrada = findById(id);
 
@@ -39,7 +44,7 @@ public class RoleService {
     }
 
     private void updateRole(Role roleEncontrada, Role role){
-        if (role.getName() != null) roleEncontrada.setName(role.getName());
+        if (role.getName() != null) roleEncontrada.setName(role.getName().toUpperCase());
     }
 
     public void delete(Long id){

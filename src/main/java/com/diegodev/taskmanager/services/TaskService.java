@@ -27,7 +27,7 @@ public class TaskService {
         User user = userService.findById(id);
 
         taskValidator.validar(task.getTitle(), user);
-
+        task.setStatus(Status.PENDENTE);
         task.setUser(user);
         return taskRepository.save(task);
     }

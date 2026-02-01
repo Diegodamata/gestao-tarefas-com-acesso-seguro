@@ -17,9 +17,7 @@ public class Role {
     @Column(length = 50, unique = true, nullable = false)
     private String name;
 
-    @ManyToMany
-    @JoinTable(name = "tb_user_role", joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @ManyToMany(mappedBy = "roles")
     private Set<User> users = new HashSet<>();
 
     public Long getId() {

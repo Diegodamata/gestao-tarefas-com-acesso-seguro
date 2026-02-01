@@ -13,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/users")
@@ -28,8 +29,9 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserResponseDto> created(@RequestBody @Valid UserRequestDto userRequestDto){
+        Set<String> role_name = userRequestDto.role_name();
         User user = userService
-                .created(userMapper.toEntity(userRequestDto));
+                .created(userMapper.toEntity(userRequestDto), role_name);
 
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()

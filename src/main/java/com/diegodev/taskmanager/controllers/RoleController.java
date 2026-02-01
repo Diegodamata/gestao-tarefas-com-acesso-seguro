@@ -5,6 +5,7 @@ import com.diegodev.taskmanager.controllers.dtos.role.responses.RoleResponseDto;
 import com.diegodev.taskmanager.controllers.mappers.role.RoleMapper;
 import com.diegodev.taskmanager.domain.Role;
 import com.diegodev.taskmanager.services.RoleService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -25,7 +26,7 @@ public class RoleController {
     }
 
     @PostMapping
-    public ResponseEntity<RoleResponseDto> created(@RequestBody RoleRequestDto roleRequestDto){
+    public ResponseEntity<RoleResponseDto> created(@RequestBody @Valid RoleRequestDto roleRequestDto){
 
         Role role = roleService.created(roleMapper.toEntity(roleRequestDto));
 
@@ -47,7 +48,7 @@ public class RoleController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RoleResponseDto> update(@RequestBody RoleRequestDto roleRequestDto,
+    public ResponseEntity<RoleResponseDto> update(@RequestBody @Valid RoleRequestDto roleRequestDto,
                                                   @PathVariable("id") Long id){
         Role roleUpdate = roleService.update(roleMapper.toEntity(roleRequestDto), id);
 

@@ -1,5 +1,6 @@
 package com.diegodev.taskmanager.services;
 
+import com.diegodev.taskmanager.domain.Role;
 import com.diegodev.taskmanager.domain.User;
 import com.diegodev.taskmanager.exceptions.RegistroNaoEncontradoException;
 import com.diegodev.taskmanager.repositories.UserRepository;
@@ -7,20 +8,29 @@ import com.diegodev.taskmanager.validator.UserValidator;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
     private final UserValidator userValidator;
+    private final RoleService roleService;
 
-    public UserService(UserRepository userRepository, UserValidator userValidator) {
+    public UserService(UserRepository userRepository, UserValidator userValidator, RoleService roleService) {
         this.userRepository = userRepository;
         this.userValidator = userValidator;
+        this.roleService = roleService;
     }
 
-    public User created(User user){
+    public User created(User user, Set<String> role_name){
         userValidator.validar(user);
+
+        for (String name : role_name){
+            Role role = roleService.findByName(name);
+            role.getUsers().add(user);
+            user.getRoles().add(role);
+        }
         return userRepository.save(user);
     }
 
