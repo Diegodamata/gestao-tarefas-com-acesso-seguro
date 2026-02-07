@@ -1,9 +1,9 @@
 package com.diegodev.taskmanager.controllers;
 
-import com.diegodev.taskmanager.controllers.mappers.user.UserMapper;
+import com.diegodev.taskmanager.controllers.dtos.user.requests.UserRequestDto;
 import com.diegodev.taskmanager.controllers.dtos.user.responses.UserResponseDto;
 import com.diegodev.taskmanager.controllers.dtos.user.responses.UserUpdateResponseDto;
-import com.diegodev.taskmanager.controllers.dtos.user.requests.UserRequestDto;
+import com.diegodev.taskmanager.controllers.mappers.user.UserMapper;
 import com.diegodev.taskmanager.domain.User;
 import com.diegodev.taskmanager.services.UserService;
 import jakarta.validation.Valid;
@@ -46,7 +46,6 @@ public class UserController {
     public ResponseEntity<List<UserResponseDto>> read(){
         List<UserResponseDto> listDto = userMapper
                 .toListDto(userService.read());
-
         return ResponseEntity.ok().body(listDto);
     }
 
