@@ -5,7 +5,6 @@ import com.diegodev.taskmanager.services.UserService;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -23,22 +22,18 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 
     @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        
+    public Authentication authenticate(Authentication authentication) {
+
         User user = userService.findByLogin(authentication.getName());
         String passwordDecoded = authentication.getCredentials().toString();
 
         boolean senhasBatem = passwordEncoder.matches(passwordDecoded, user.getPassword());
-        
-        if (senhasBatem){
-            new CustomAuthentication(user);
+
+        if (senhasBatem) {
+            return new CustomAuthentication(user);
         }
 
-        throw getUserNotFound();
-    }
-
-    private UsernameNotFoundException getUserNotFound() {
-        return new UsernameNotFoundException("Usuário ou Senha iválidos!");
+        throw new UsernameNotFoundException("Usuário e/ou Senha inválidos!");
     }
 
     @Override
