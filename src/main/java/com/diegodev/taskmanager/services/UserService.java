@@ -58,6 +58,11 @@ public class UserService {
                 .orElseThrow(() -> new RegistroNaoEncontradoException("Usuário não encontrado!"));
     }
 
+    public User findByEmail(String email){
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Usuário não encontrado!"));
+    }
+
     public User update(User user, Long id){
         User userEncontrado = findById(id);
 

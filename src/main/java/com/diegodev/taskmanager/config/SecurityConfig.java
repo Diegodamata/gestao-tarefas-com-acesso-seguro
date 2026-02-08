@@ -1,5 +1,6 @@
 package com.diegodev.taskmanager.config;
 
+import com.diegodev.taskmanager.security.LoginGoogleSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -15,12 +16,16 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain securityFilterChain(HttpSecurity http,
+                                                   LoginGoogleSuccessHandler successHandler) throws Exception{
 
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
+                .oauth2Login(oauth2 ->{
+                    oauth2.successHandler(successHandler);
+                })
                 .authorizeHttpRequests(authorize -> {
                     authorize.anyRequest().authenticated();
                 })
