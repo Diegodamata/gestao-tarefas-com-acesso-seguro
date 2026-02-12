@@ -1,47 +1,42 @@
 package com.diegodev.taskmanager.security;
 
-import com.diegodev.taskmanager.domain.User;
+import com.diegodev.taskmanager.controllers.dtos.security.SecurityUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.security.auth.Subject;
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 public class CustomAuthentication implements Authentication {
 
-    private final User user;
+    private final SecurityUser securityUser;
 
-    public CustomAuthentication(User user) {
-        this.user = user;
-    }
-
-    public User getUser() {
-        return user;
+    public CustomAuthentication(SecurityUser securityUser) {
+        this.securityUser = securityUser;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return user.getRoles()
+        return securityUser.roles()
                 .stream()
-                .map(x -> new SimpleGrantedAuthority(x.getName()))
-                .collect(Collectors.toSet());
+                .map(SimpleGrantedAuthority::new)
+                .toList();
     }
 
     @Override
     public Object getCredentials() {
-        return user.getPassword();
+        return null;
     }
 
     @Override
     public Object getDetails() {
-        return user;
+        return securityUser;
     }
 
     @Override
     public Object getPrincipal() {
-        return user;
+        return securityUser;
     }
 
     @Override
@@ -51,12 +46,11 @@ public class CustomAuthentication implements Authentication {
 
     @Override
     public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
-
     }
 
     @Override
     public String getName() {
-        return user.getLogin();
+        return securityUser.login();
     }
 
     @Override

@@ -58,8 +58,13 @@ public class UserService {
                 .orElseThrow(() -> new RegistroNaoEncontradoException("Usuário não encontrado!"));
     }
 
-    public User findByEmail(String email){
-        return userRepository.findByEmail(email)
+    public User findByLoginFetchRoles(String login){
+        return userRepository.findByLoginFetchRoles(login)
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Usuário não encontrado!"));
+    }
+
+    public User findByEmailFetchRoles(String email){
+        return userRepository.findByEmailFetchRoles(email)
                 .orElseThrow(() -> new RegistroNaoEncontradoException("Usuário não encontrado!"));
     }
 

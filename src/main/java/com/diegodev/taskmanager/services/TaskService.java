@@ -5,6 +5,7 @@ import com.diegodev.taskmanager.domain.User;
 import com.diegodev.taskmanager.domain.enums.Status;
 import com.diegodev.taskmanager.exceptions.RegistroNaoEncontradoException;
 import com.diegodev.taskmanager.repositories.TaskRepository;
+import com.diegodev.taskmanager.security.ObterUserLogado;
 import com.diegodev.taskmanager.validator.TaskValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,46 +15,41 @@ import org.springframework.stereotype.Service;
 public class TaskService {
 
     private final TaskRepository taskRepository;
-    private final UserService userService;
     private final TaskValidator taskValidator;
+    private final ObterUserLogado obterUserLogado;
 
-    public TaskService(TaskRepository taskRepository, UserService userService, TaskValidator taskValidator) {
+    public TaskService(TaskRepository taskRepository, TaskValidator taskValidator, ObterUserLogado obterUserLogado) {
         this.taskRepository = taskRepository;
-        this.userService = userService;
         this.taskValidator = taskValidator;
+        this.obterUserLogado = obterUserLogado;
     }
 
-    public Task created(Task task, Long id){
-        User user = userService.findById(id);
-
+    public Task created(Task task){
+        User user = obterUserLogado.getUserLogado();
         taskValidator.validar(task.getTitle(), user);
         task.setStatus(Status.PENDENTE);
         task.setUser(user);
         return taskRepository.save(task);
     }
 
-    public Page<Task> readingByTasks(Long id, int page, int size){
-        User user = userService.findById(id);
-
+    public Page<Task> readingByTasks(int page, int size){
+        User user = obterUserLogado.getUserLogado();
         return taskRepository.findByUser(user, PageRequest.of(page, size));
     }
 
-    public Task findByTitle(String title, Long id){
-        User user = userService.findById(id);
-
+    public Task findByTitle(String title){
+        User user = obterUserLogado.getUserLogado();
         return taskRepository.findByTitleContainingIgnoreCaseAndUser(title, user)
                 .orElseThrow(() -> new RegistroNaoEncontradoException("Tarefa não encontrada com esse título: " + title));
     }
 
-    public Page<Task> findByStatus(Status status, Long id, int page, int size){
-        User user = userService.findById(id);
-
+    public Page<Task> findByStatus(Status status, int page, int size){
+        User user = obterUserLogado.getUserLogado();
         return taskRepository.findByStatusAndUser(status, user, PageRequest.of(page, size));
     }
 
-    public Task update(Task task, Long id, Long task_id){
-        User user = userService.findById(id);
-
+    public Task update(Task task, Long task_id){
+        User user = obterUserLogado.getUserLogado();
         Task taskEncontrada = user.getTasks().stream().
                 filter(t -> t.getId().equals(task_id))
                 .findFirst()
@@ -70,9 +66,8 @@ public class TaskService {
         if (task.getStatus() != null && !task.getStatus().equals(taskEncontrada.getStatus())) taskEncontrada.setStatus(task.getStatus());
     }
 
-    public void delete(Long id, Long task_id){
-        User user = userService.findById(id);
-
+    public void delete(Long task_id){
+        User user = obterUserLogado.getUserLogado();
         Task taskEncontrada = user.getTasks().stream().
                 filter(t -> t.getId().equals(task_id))
                 .findFirst()

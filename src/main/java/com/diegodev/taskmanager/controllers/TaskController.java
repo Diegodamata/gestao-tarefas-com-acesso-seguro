@@ -9,13 +9,14 @@ import com.diegodev.taskmanager.services.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 
 @RestController
-@RequestMapping("/{id}/tasks")
+@RequestMapping("/tasks")
 public class TaskController {
 
     private final TaskService taskService;
@@ -26,11 +27,12 @@ public class TaskController {
         this.taskMapper = taskMapper;
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping
-    public ResponseEntity<TaskResponseDto> created(@RequestBody @Valid TaskRequestDto taskRequestDto, @PathVariable("id") Long id){
+    public ResponseEntity<TaskResponseDto> created(@RequestBody @Valid TaskRequestDto taskRequestDto){
 
         Task task = taskService
-                .created(taskMapper.toEntity(taskRequestDto), id);
+                .created(taskMapper.toEntity(taskRequestDto));
 
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -41,49 +43,48 @@ public class TaskController {
         return ResponseEntity.created(uri).body(taskMapper.toDto(task));
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping
-    public ResponseEntity<Page<TaskResponseDto>> readingByTasksOrStatus(@PathVariable("id") Long id,
-                                                      @RequestParam(required = false) String status,
+    public ResponseEntity<Page<TaskResponseDto>> readingByTasksOrStatus(@RequestParam(required = false) String status,
                                                       @RequestParam(defaultValue = "0") int page,
                                                       @RequestParam(defaultValue = "10") int size){
 
-
         Page<Task> pageTasks;
         if (status != null && !status.isBlank()){
-            pageTasks = taskService.findByStatus(Status.from(status), id, page, size);
+            pageTasks = taskService.findByStatus(Status.from(status), page, size);
         }
         else {
-            pageTasks = taskService.readingByTasks(id, page, size);
+            pageTasks = taskService.readingByTasks(page, size);
         }
 
         return ResponseEntity.ok().body(pageTasks.map(taskMapper::toDto));
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/titles")
-    public ResponseEntity<TaskResponseDto> readingByTitle(@PathVariable("id") Long id,
-                                                       @RequestParam(value = "title", required = true) String title){
+    public ResponseEntity<TaskResponseDto> readingByTitle(@RequestParam(value = "title", required = true) String title){
 
 
-         Task task = taskService.findByTitle(title, id);
+         Task task = taskService.findByTitle(title);
 
         return ResponseEntity.ok().body(taskMapper.toDto(task));
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PutMapping("/{task_id}")
     public ResponseEntity<TaskResponseDto> update(@RequestBody @Valid TaskRequestDto taskRequestDto,
-                                                        @PathVariable("id") Long id,
                                                         @PathVariable("task_id") Long task_id){
 
         Task task = taskService.update(taskMapper
-                .toEntity(taskRequestDto), id, task_id);
+                .toEntity(taskRequestDto), task_id);
 
         return ResponseEntity.ok().body(taskMapper.toDto(task));
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("/{task_id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") Long id,
-                                            @PathVariable("task_id") Long task_id){
-        taskService.delete(id, task_id);
+    public ResponseEntity<Void> delete(@PathVariable("task_id") Long task_id){
+        taskService.delete(task_id);
         return ResponseEntity.ok().build();
     }
 }
