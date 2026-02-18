@@ -1,7 +1,5 @@
 package com.diegodev.taskmanager.security;
 
-import com.diegodev.taskmanager.controllers.dtos.security.SecurityUser;
-import com.diegodev.taskmanager.domain.Role;
 import com.diegodev.taskmanager.domain.User;
 import com.diegodev.taskmanager.services.UserService;
 import jakarta.servlet.FilterChain;
@@ -18,7 +16,6 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Component
 public class LoginGoogleSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
@@ -48,16 +45,7 @@ public class LoginGoogleSuccessHandler extends SavedRequestAwareAuthenticationSu
         if (userEncontrado == null){
             cadastrarUser(email);
         }
-
-        Set<String> roles = userEncontrado.getRoles()
-                .stream()
-                .map(Role::getName)
-                .collect(Collectors.toSet());
-        SecurityUser securityUser = new SecurityUser(
-                userEncontrado.getId(),
-                userEncontrado.getEmail(),
-                roles);
-        authentication = new CustomAuthentication(securityUser);
+        authentication = new CustomAuthentication(userEncontrado);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 

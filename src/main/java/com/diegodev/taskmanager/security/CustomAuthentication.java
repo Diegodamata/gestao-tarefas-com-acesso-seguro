@@ -1,6 +1,6 @@
 package com.diegodev.taskmanager.security;
 
-import com.diegodev.taskmanager.controllers.dtos.security.SecurityUser;
+import com.diegodev.taskmanager.domain.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,17 +10,17 @@ import java.util.Collection;
 
 public class CustomAuthentication implements Authentication {
 
-    private final SecurityUser securityUser;
+    private final User user;
 
-    public CustomAuthentication(SecurityUser securityUser) {
-        this.securityUser = securityUser;
+    public CustomAuthentication(User user) {
+        this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return securityUser.roles()
+        return user.getRoles()
                 .stream()
-                .map(SimpleGrantedAuthority::new)
+                .map(name -> new SimpleGrantedAuthority(name.getName()))
                 .toList();
     }
 
@@ -31,12 +31,12 @@ public class CustomAuthentication implements Authentication {
 
     @Override
     public Object getDetails() {
-        return securityUser;
+        return user;
     }
 
     @Override
     public Object getPrincipal() {
-        return securityUser;
+        return user;
     }
 
     @Override
@@ -50,7 +50,7 @@ public class CustomAuthentication implements Authentication {
 
     @Override
     public String getName() {
-        return securityUser.login();
+        return user.getLogin();
     }
 
     @Override

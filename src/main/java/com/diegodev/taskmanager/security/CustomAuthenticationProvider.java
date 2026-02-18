@@ -1,7 +1,5 @@
 package com.diegodev.taskmanager.security;
 
-import com.diegodev.taskmanager.controllers.dtos.security.SecurityUser;
-import com.diegodev.taskmanager.domain.Role;
 import com.diegodev.taskmanager.domain.User;
 import com.diegodev.taskmanager.services.UserService;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -10,9 +8,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
@@ -34,19 +29,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         boolean senhasBatem = passwordEncoder.matches(passwordDecoded, user.getPassword());
 
         if (senhasBatem) {
-
-            Set<String> roles = user.getRoles()
-                    .stream()
-                    .map(Role::getName)
-                    .collect(Collectors.toSet());
-
-            SecurityUser securityUser = new SecurityUser(
-                    user.getId(),
-                    user.getLogin(),
-                    roles
-            );
-
-            return new CustomAuthentication(securityUser);
+            return new CustomAuthentication(user);
         }
 
         throw new UsernameNotFoundException("Usuário e/ou Senha inválidos!");
