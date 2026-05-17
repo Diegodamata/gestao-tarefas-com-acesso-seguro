@@ -1,6 +1,8 @@
 package com.diegodev.taskmanager.controllers;
 
+import com.diegodev.taskmanager.controllers.dtos.login.LoginResponse;
 import com.diegodev.taskmanager.services.AuthService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +19,12 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String generatedAccessToken(Authentication authentication){
-        return authService.generatedAccessToken(authentication);
+    public ResponseEntity<LoginResponse> login(Authentication authentication){
+
+        String accessToken = authService.generatedAccessToken(authentication);
+
+        String refreshToken = authService.generatedRefreshToken(authentication.getName());
+
+        return ResponseEntity.ok(new LoginResponse(accessToken, refreshToken, 3600L));
     }
 }
