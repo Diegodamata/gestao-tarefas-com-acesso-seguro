@@ -1,6 +1,7 @@
 package com.diegodev.taskmanager.services;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
@@ -17,17 +18,22 @@ public class AuthService {
         this.jwtEncoder = jwtEncoder;
     }
 
-    public String generatedToken(Authentication authentication){
+    public String generatedAccessToken(Authentication authentication){
 
         Instant now = Instant.now();
-        long expired = 3600L;
+        long expiresIn = 3600L;
+
+        var scopes = authentication.getAuthorities()
+                .stream()
+                .map(GrantedAuthority::getAuthority)
+                .toList();
 
         var claims = JwtClaimsSet.builder()
-                .issuer("gestao-taredfas-com-acesso-seguro")
+                .issuer("gestao-tarefas-com-acesso-seguro")
                 .issuedAt(now)
-                .expiresAt(now.plusSeconds(expired))
+                .expiresAt(now.plusSeconds(expiresIn))
                 .subject(authentication.getName())
-                .claim("scopes", authentication.getAuthorities())
+                .claim("scope", scopes)
                 .build();
 
         return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();

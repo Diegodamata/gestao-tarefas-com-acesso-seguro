@@ -2,6 +2,7 @@ package com.diegodev.taskmanager.controllers;
 
 import com.diegodev.taskmanager.services.AuthService;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,7 +15,9 @@ public class AuthController {
     public AuthController(AuthService authService) {
         this.authService = authService;
     }
-    public String generatedToken(Authentication authentication){
-        return authService.generatedToken(authentication);
+
+    @PostMapping("/login")
+    public String generatedAccessToken(Authentication authentication){
+        return authService.generatedAccessToken(authentication);
     }
 }

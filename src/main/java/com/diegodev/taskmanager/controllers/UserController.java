@@ -8,6 +8,7 @@ import com.diegodev.taskmanager.domain.User;
 import com.diegodev.taskmanager.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -43,6 +44,7 @@ public class UserController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserResponseDto>> read(){
         List<UserResponseDto> listDto = userMapper
                 .toListDto(userService.read());
@@ -50,17 +52,18 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<UserUpdateResponseDto> update(@RequestBody @Valid UserRequestDto userRequestDto,
                                                         @PathVariable("id") Long id){
 
         User userUpdate = userService
                 .update(userMapper.toEntity(userRequestDto), id);
 
-        return ResponseEntity.ok().body(userMapper
-                .toUpdateDto(userUpdate));
+        return ResponseEntity.ok().body(userMapper.toUpdateDto(userUpdate));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id){
         userService.delete(id);
         return ResponseEntity.ok().build();

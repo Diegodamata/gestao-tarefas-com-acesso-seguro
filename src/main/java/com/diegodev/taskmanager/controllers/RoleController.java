@@ -7,6 +7,7 @@ import com.diegodev.taskmanager.domain.Role;
 import com.diegodev.taskmanager.services.RoleService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -26,6 +27,7 @@ public class RoleController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<RoleResponseDto> created(@RequestBody @Valid RoleRequestDto roleRequestDto){
 
         Role role = roleService.created(roleMapper.toEntity(roleRequestDto));
@@ -40,6 +42,7 @@ public class RoleController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<RoleResponseDto>> reading(){
 
         List<Role> roles = roleService.reading();
@@ -48,6 +51,7 @@ public class RoleController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<RoleResponseDto> update(@RequestBody @Valid RoleRequestDto roleRequestDto,
                                                   @PathVariable("id") Long id){
         Role roleUpdate = roleService.update(roleMapper.toEntity(roleRequestDto), id);
@@ -56,6 +60,7 @@ public class RoleController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id){
         roleService.delete(id);
         return ResponseEntity.ok().build();

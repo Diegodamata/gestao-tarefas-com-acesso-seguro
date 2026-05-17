@@ -27,7 +27,7 @@ public class TaskController {
         this.taskMapper = taskMapper;
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PostMapping
     public ResponseEntity<TaskResponseDto> created(@RequestBody @Valid TaskRequestDto taskRequestDto){
 
@@ -43,7 +43,7 @@ public class TaskController {
         return ResponseEntity.created(uri).body(taskMapper.toDto(task));
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping
     public ResponseEntity<Page<TaskResponseDto>> readingByTasksOrStatus(@RequestParam(required = false) String status,
                                                       @RequestParam(defaultValue = "0") int page,
@@ -60,7 +60,7 @@ public class TaskController {
         return ResponseEntity.ok().body(pageTasks.map(taskMapper::toDto));
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/titles")
     public ResponseEntity<TaskResponseDto> readingByTitle(@RequestParam(value = "title", required = true) String title){
 
@@ -70,7 +70,7 @@ public class TaskController {
         return ResponseEntity.ok().body(taskMapper.toDto(task));
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PutMapping("/{task_id}")
     public ResponseEntity<TaskResponseDto> update(@RequestBody @Valid TaskRequestDto taskRequestDto,
                                                         @PathVariable("task_id") Long task_id){
@@ -81,7 +81,7 @@ public class TaskController {
         return ResponseEntity.ok().body(taskMapper.toDto(task));
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @DeleteMapping("/{task_id}")
     public ResponseEntity<Void> delete(@PathVariable("task_id") Long task_id){
         taskService.delete(task_id);
