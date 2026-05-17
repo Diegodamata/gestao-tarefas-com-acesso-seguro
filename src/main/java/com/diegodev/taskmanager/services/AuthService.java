@@ -102,6 +102,6 @@ public class AuthService {
 
         refreshTokenRepository.save(refreshTokenEncontrado);
 
-        return new LoginResponse(accessToken, refreshToken, 7200L);
+        return new LoginResponse(accessToken, refresh, 7200L);
     }
 }
