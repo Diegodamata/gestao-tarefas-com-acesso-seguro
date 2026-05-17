@@ -1,10 +1,12 @@
 package com.diegodev.taskmanager.controllers;
 
 import com.diegodev.taskmanager.controllers.dtos.login.LoginResponse;
+import com.diegodev.taskmanager.controllers.dtos.token.RefreshToken;
 import com.diegodev.taskmanager.services.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,5 +28,12 @@ public class AuthController {
         String refreshToken = authService.generatedRefreshToken(authentication.getName());
 
         return ResponseEntity.ok(new LoginResponse(accessToken, refreshToken, 3600L));
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<LoginResponse> refresh(@RequestBody RefreshToken refreshToken){
+
+        return ResponseEntity.ok(
+                authService.generatedAccessTokenViaRefresh(refreshToken.toString()));
     }
 }

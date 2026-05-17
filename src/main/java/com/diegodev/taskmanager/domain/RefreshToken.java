@@ -12,6 +12,7 @@ public class RefreshToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(columnDefinition = "TEXT")
     private String token;
     private String name;
     private Instant expiresIn;
