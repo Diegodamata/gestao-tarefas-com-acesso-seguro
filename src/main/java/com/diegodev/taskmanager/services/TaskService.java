@@ -60,10 +60,20 @@ public class TaskService {
         return taskRepository.save(taskEncontrada);
     }
 
+    public Task concluirTask(Long task_id){
+        User user = obterUserLogado.getUserLogado();
+        Task taskEncontrada = user.getTasks().stream().
+                filter(t -> t.getId().equals(task_id))
+                .findFirst()
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Tarefa não encontrada!"));
+
+        taskEncontrada.setStatus(Status.CONCLUIDO);
+        return taskRepository.save(taskEncontrada);
+    }
+
     private void updateTask(Task task, Task taskEncontrada) {
         if (task.getTitle() != null && !task.getTitle().equals(taskEncontrada.getTitle())) taskEncontrada.setTitle(task.getTitle());
         if (task.getDescription() != null && !task.getDescription().equals(taskEncontrada.getDescription())) taskEncontrada.setDescription(task.getDescription());
-        if (task.getStatus() != null && !task.getStatus().equals(taskEncontrada.getStatus())) taskEncontrada.setStatus(task.getStatus());
     }
 
     public void delete(Long task_id){

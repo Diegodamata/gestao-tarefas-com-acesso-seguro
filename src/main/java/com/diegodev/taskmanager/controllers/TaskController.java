@@ -82,6 +82,14 @@ public class TaskController {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PatchMapping("/{task_id}")
+    public ResponseEntity<TaskResponseDto> concluirTask(@PathVariable("task_id") Long task_id){
+        Task task = taskService.concluirTask(task_id);
+
+        return ResponseEntity.ok().body(taskMapper.toDto(task));
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @DeleteMapping("/{task_id}")
     public ResponseEntity<Void> delete(@PathVariable("task_id") Long task_id){
         taskService.delete(task_id);
