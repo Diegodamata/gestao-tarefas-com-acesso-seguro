@@ -12,7 +12,6 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -50,6 +49,16 @@ public class SecurityConfig {
                     oauth2.successHandler(successHandler);
                 })
                 .authorizeHttpRequests(authorize -> {
+                    //swagger
+                    authorize.requestMatchers(
+                            "/v2/api-docs/**",
+                            "/v3/api-docs/**",
+                            "/swagger-resources/**",
+                            "/swagger-ui.html/**",
+                            "/swagger-ui/**",
+                            "/webjars/**",
+                            "/error/**"
+                    ).permitAll();
                     authorize.requestMatchers(HttpMethod.POST,"/users").permitAll();
                     authorize.anyRequest().authenticated();
                 })
@@ -57,22 +66,6 @@ public class SecurityConfig {
                     oauth2rs.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()));
                 })
                 .build();
-    }
-
-    //Bean para configurar a segurança da api, pedindo para ignorar urls do swagger
-    //pois é apenas uma documentação não precisa passar pela segurança
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer(){
-        return web -> {
-          web.ignoring().requestMatchers(
-                "/v2/api-docs/**",
-                "/v3/api-docs/**",
-                "/swagger-resources/**",
-                "/swagger-ui.html/**",
-                "/swagger-ui/**",
-                "/webjars/**"
-          );
-        };
     }
 
     @Bean
