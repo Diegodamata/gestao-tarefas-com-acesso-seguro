@@ -54,10 +54,10 @@ public class SecurityConfig {
                             "/v2/api-docs/**",
                             "/v3/api-docs/**",
                             "/swagger-resources/**",
-                            "/swagger-ui.html/**",
+                            "/swagger-ui.html",
                             "/swagger-ui/**",
                             "/webjars/**",
-                            "/error/**"
+                            "/error"
                     ).permitAll();
                     authorize.requestMatchers(HttpMethod.POST,"/users").permitAll();
                     authorize.anyRequest().authenticated();
