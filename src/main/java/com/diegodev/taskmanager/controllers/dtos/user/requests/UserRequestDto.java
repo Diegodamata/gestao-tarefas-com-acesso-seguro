@@ -1,11 +1,13 @@
 package com.diegodev.taskmanager.controllers.dtos.user.requests;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Set;
 
+@Schema(name = "User")
 public record UserRequestDto(
 
         @NotBlank(message = "Campo login não pode estar vazio!")

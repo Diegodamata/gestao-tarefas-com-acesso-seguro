@@ -6,6 +6,10 @@ import com.diegodev.taskmanager.controllers.dtos.user.responses.UserUpdateRespon
 import com.diegodev.taskmanager.controllers.mappers.user.UserMapper;
 import com.diegodev.taskmanager.domain.User;
 import com.diegodev.taskmanager.services.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,6 +22,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/users")
+@Tag(name = "Usuários")
 public class UserController {
 
     private final UserService userService;
@@ -29,6 +34,12 @@ public class UserController {
     }
 
     @PostMapping
+    @Operation(summary = "Criar", description = "Criar novo usuário")
+    @ApiResponses({ //pode retornar mais de uma resposta, recebe um array
+            @ApiResponse(responseCode = "201", description = "Cadastrado com sucesso"),
+            @ApiResponse(responseCode = "422", description = "Erro de validação"),
+            @ApiResponse(responseCode = "409", description = "Usuário já cadastrado")
+    })
     public ResponseEntity<UserResponseDto> created(@RequestBody @Valid UserRequestDto userRequestDto){
         Set<String> role_name = userRequestDto.role_name();
         User user = userService
@@ -45,6 +56,10 @@ public class UserController {
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Buscar", description = "Listar todos os usuarios")
+    @ApiResponses({ //pode retornar mais de uma resposta, recebe um array
+            @ApiResponse(responseCode = "200", description = "Usuários listados com sucesso")
+    })
     public ResponseEntity<List<UserResponseDto>> read(){
         List<UserResponseDto> listDto = userMapper
                 .toListDto(userService.read());
@@ -53,6 +68,12 @@ public class UserController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @Operation(summary = "Atualizar", description = "Atualizar dados do usuário")
+    @ApiResponses({ //pode retornar mais de uma resposta, recebe um array
+            @ApiResponse(responseCode = "200", description = "Usuário atualizado com sucesso"),
+            @ApiResponse(responseCode = "422", description = "Erro de validação"),
+            @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
+    })
     public ResponseEntity<UserUpdateResponseDto> update(@RequestBody @Valid UserRequestDto userRequestDto,
                                                         @PathVariable("id") Long id){
 
@@ -64,6 +85,11 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Deletar", description = "Deletando um usuário")
+    @ApiResponses({ //pode retornar mais de uma resposta, recebe um array
+            @ApiResponse(responseCode = "200", description = "Usuário deletado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
+    })
     public ResponseEntity<Void> delete(@PathVariable("id") Long id){
         userService.delete(id);
         return ResponseEntity.ok().build();
