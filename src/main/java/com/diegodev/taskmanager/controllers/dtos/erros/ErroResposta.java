@@ -13,4 +13,8 @@ public record ErroResposta(int status, String message, List<ErroCampo> errors) {
     public static ErroResposta notFound(String message){
         return new ErroResposta(HttpStatus.NOT_FOUND.value(), message, List.of());
     }
+
+    public static ErroResposta forbidden(String message){
+        return new ErroResposta(HttpStatus.FORBIDDEN.value(), message, List.of());
+    }
 }

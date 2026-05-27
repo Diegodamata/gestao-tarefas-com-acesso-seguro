@@ -55,7 +55,7 @@ public class UserService {
 
     public User findByLogin(String login){
         return userRepository.findByLogin(login)
-                .orElseThrow(() -> new RegistroNaoEncontradoException("Usuário não encontrado!"));
+                .orElse(null);
     }
 
     public User findByLoginFetchRoles(String login){

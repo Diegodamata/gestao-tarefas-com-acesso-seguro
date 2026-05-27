@@ -2,6 +2,7 @@ package com.diegodev.taskmanager.controllers;
 
 import com.diegodev.taskmanager.controllers.dtos.erros.ErroCampo;
 import com.diegodev.taskmanager.controllers.dtos.erros.ErroResposta;
+import com.diegodev.taskmanager.exceptions.ForbiddenException;
 import com.diegodev.taskmanager.exceptions.RegistroDuplicadoException;
 import com.diegodev.taskmanager.exceptions.RegistroNaoEncontradoException;
 import org.springframework.http.HttpStatus;
@@ -37,5 +38,20 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErroResposta handleRegistroNaoEncontradoException(RegistroNaoEncontradoException e){
         return ErroResposta.notFound(e.getMessage());
+    }
+
+    @ExceptionHandler(ForbiddenException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ErroResposta handleForbiddenException(ForbiddenException e){
+        return ErroResposta.forbidden(e.getMessage());
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErroResposta handleInternalServerError(RuntimeException e){
+        return new ErroResposta(
+          HttpStatus.INTERNAL_SERVER_ERROR.value(),
+          "Erro inesperado. Entre em contato com a administração",
+          List.of());
     }
 }
