@@ -6,6 +6,10 @@ import com.diegodev.taskmanager.controllers.mappers.task.TaskMapper;
 import com.diegodev.taskmanager.domain.Task;
 import com.diegodev.taskmanager.domain.enums.Status;
 import com.diegodev.taskmanager.services.TaskService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +21,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/tasks")
+@Tag(name = "Task")
 public class TaskController {
 
     private final TaskService taskService;
@@ -29,6 +34,12 @@ public class TaskController {
 
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PostMapping
+    @Operation(summary = "Criar", description = "Criar uma nova task")
+    @ApiResponses({ //pode retornar mais de uma resposta, recebe um array
+            @ApiResponse(responseCode = "201", description = "Cadastrado com sucesso"),
+            @ApiResponse(responseCode = "422", description = "Erro de validação"),
+            @ApiResponse(responseCode = "409", description = "Task já cadastrada")
+    })
     public ResponseEntity<TaskResponseDto> created(@RequestBody @Valid TaskRequestDto taskRequestDto){
 
         Task task = taskService
@@ -45,6 +56,11 @@ public class TaskController {
 
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping
+    @Operation(summary = "Buscar", description = "Buscar task por status")
+    @ApiResponses({ //pode retornar mais de uma resposta, recebe um array
+            @ApiResponse(responseCode = "200", description = "Tasks listadas com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Task não encontrada")
+    })
     public ResponseEntity<Page<TaskResponseDto>> readingByTasksOrStatus(@RequestParam(required = false) String status,
                                                       @RequestParam(defaultValue = "0") int page,
                                                       @RequestParam(defaultValue = "10") int size){
@@ -62,6 +78,11 @@ public class TaskController {
 
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/titles")
+    @Operation(summary = "Buscar", description = "Buscar task por title")
+    @ApiResponses({ //pode retornar mais de uma resposta, recebe um array
+            @ApiResponse(responseCode = "200", description = "Tasks listadas com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Task não encontrada")
+    })
     public ResponseEntity<TaskResponseDto> readingByTitle(@RequestParam(value = "title", required = true) String title){
 
 
@@ -72,6 +93,10 @@ public class TaskController {
 
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PutMapping("/{task_id}")
+    @Operation(summary = "Atualizar", description = "Atualizar uma task")
+    @ApiResponses({ //pode retornar mais de uma resposta, recebe um array
+            @ApiResponse(responseCode = "200", description = "Tasks atualizada com sucesso")
+    })
     public ResponseEntity<TaskResponseDto> update(@RequestBody @Valid TaskRequestDto taskRequestDto,
                                                         @PathVariable("task_id") Long task_id){
 
@@ -83,6 +108,10 @@ public class TaskController {
 
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PatchMapping("/{task_id}")
+    @Operation(summary = "Concluir", description = "Concluir uma task")
+    @ApiResponses({ //pode retornar mais de uma resposta, recebe um array
+            @ApiResponse(responseCode = "200", description = "Tasks concluida com sucesso")
+    })
     public ResponseEntity<TaskResponseDto> concluirTask(@PathVariable("task_id") Long task_id){
         Task task = taskService.concluirTask(task_id);
 
@@ -91,6 +120,10 @@ public class TaskController {
 
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @DeleteMapping("/{task_id}")
+    @Operation(summary = "Deletar", description = "Deletar uma task")
+    @ApiResponses({ //pode retornar mais de uma resposta, recebe um array
+            @ApiResponse(responseCode = "200", description = "Tasks deletada com sucesso")
+    })
     public ResponseEntity<Void> delete(@PathVariable("task_id") Long task_id){
         taskService.delete(task_id);
         return ResponseEntity.ok().build();
