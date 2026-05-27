@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.Set;
 
-@Schema(name = "User")
+@Schema(name = "UserRequest")
 public record UserRequestDto(
 
         @NotBlank(message = "Campo login não pode estar vazio!")

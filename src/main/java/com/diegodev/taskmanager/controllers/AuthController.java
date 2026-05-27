@@ -3,6 +3,9 @@ package com.diegodev.taskmanager.controllers;
 import com.diegodev.taskmanager.controllers.dtos.login.LoginResponse;
 import com.diegodev.taskmanager.controllers.dtos.token.RefreshToken;
 import com.diegodev.taskmanager.services.AuthService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -23,6 +26,10 @@ public class AuthController {
     }
 
     @PostMapping("/login")
+    @Operation(summary = "Login", description = "Login do usuário")
+    @ApiResponses({ //pode retornar mais de uma resposta, recebe um array
+            @ApiResponse(responseCode = "200", description = "AcessToken e Refresh token retornado com sucesso")
+    })
     public ResponseEntity<LoginResponse> login(Authentication authentication){
 
         String accessToken = authService.generatedAccessToken(authentication);
@@ -33,6 +40,10 @@ public class AuthController {
     }
 
     @PostMapping("/refresh")
+    @Operation(summary = "RefreshToken", description = "Obtendo um novo accessToken atraves do refresh")
+    @ApiResponses({ //pode retornar mais de uma resposta, recebe um array
+            @ApiResponse(responseCode = "200", description = "AcessToken e Refresh token retornado com sucesso")
+    })
     public ResponseEntity<LoginResponse> refresh(@RequestBody RefreshToken refreshToken){
         String refresh = refreshToken.refreshToken();
         return ResponseEntity.ok(
