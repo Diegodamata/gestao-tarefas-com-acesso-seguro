@@ -1,0 +1,27 @@
+2026-06-01T19:48:52.122-03:00  INFO 4350 --- [taskmanager] [main] c.d.taskmanager.TaskmanagerApplication   : Starting TaskmanagerApplication using Java 21.0.10 with PID 4350 (/home/diego/dev/gestao-tarefas-com-acesso-seguro/target/classes started by diego in /home/diego/dev/gestao-tarefas-com-acesso-seguro)
+2026-06-01T19:48:52.155-03:00  INFO 4350 --- [taskmanager] [main] c.d.taskmanager.TaskmanagerApplication   : The following 1 profile is active: "dev"
+2026-06-01T19:49:11.613-03:00  INFO 4350 --- [taskmanager] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-01T19:49:13.958-03:00  INFO 4350 --- [taskmanager] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1913 ms. Found 4 JPA repository interfaces.
+2026-06-01T19:49:41.629-03:00  INFO 4350 --- [taskmanager] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-06-01T19:49:42.122-03:00  INFO 4350 --- [taskmanager] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-01T19:49:42.123-03:00  INFO 4350 --- [taskmanager] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.31]
+2026-06-01T19:49:46.018-03:00  INFO 4350 --- [taskmanager] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-06-01T19:49:46.032-03:00  INFO 4350 --- [taskmanager] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 52590 ms
+2026-06-01T19:49:56.527-03:00  INFO 4350 --- [taskmanager] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-06-01T19:50:00.225-03:00  INFO 4350 --- [taskmanager] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-06-01T19:50:01.338-03:00  INFO 4350 --- [taskmanager] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-06-01T19:50:07.932-03:00  INFO 4350 --- [taskmanager] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-01T19:50:08.710-03:00  INFO 4350 --- [taskmanager] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-01T19:50:11.897-03:00  INFO 4350 --- [taskmanager] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@5831989d
+2026-06-01T19:50:11.926-03:00  INFO 4350 --- [taskmanager] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-01T19:50:12.871-03:00  WARN 4350 --- [taskmanager] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-01T19:50:30.205-03:00  INFO 4350 --- [taskmanager] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-01T19:50:31.566-03:00  INFO 4350 --- [taskmanager] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-01T19:50:38.102-03:00  INFO 4350 --- [taskmanager] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-06-01T19:50:45.839-03:00  WARN 4350 --- [taskmanager] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-01T19:50:45.974-03:00  INFO 4350 --- [taskmanager] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name customAuthenticationProvider
+2026-06-01T19:50:51.346-03:00  INFO 4350 --- [taskmanager] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-06-01T19:50:51.496-03:00  INFO 4350 --- [taskmanager] [main] c.d.taskmanager.TaskmanagerApplication   : Started TaskmanagerApplication in 125.834 seconds (process running for 136.038)
+2026-06-01T19:52:58.818-03:00  INFO 4350 --- [taskmanager] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-06-01T19:52:58.833-03:00  INFO 4350 --- [taskmanager] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-01T19:52:58.886-03:00  INFO 4350 --- [taskmanager] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
