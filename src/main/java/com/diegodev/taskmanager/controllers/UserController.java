@@ -44,6 +44,9 @@ public class UserController {
             @ApiResponse(responseCode = "409", description = "Usuário já cadastrado")
     })
     public ResponseEntity<UserResponseDto> created(@RequestBody @Valid UserRequestDto userRequestDto){
+
+        logger.info("Criando um novo usuário {}", userRequestDto.login()); //passando o login do usuario de parametro
+
         Set<String> role_name = userRequestDto.role_name();
         User user = userService
                 .created(userMapper.toEntity(userRequestDto), role_name);
