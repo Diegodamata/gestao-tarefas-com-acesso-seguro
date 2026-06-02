@@ -25,3 +25,70 @@
 2026-06-01T19:52:58.818-03:00  INFO 4350 --- [taskmanager] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2026-06-01T19:52:58.833-03:00  INFO 4350 --- [taskmanager] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2026-06-01T19:52:58.886-03:00  INFO 4350 --- [taskmanager] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-06-01T20:50:26.557-03:00  INFO 5382 --- [taskmanager] [main] c.d.taskmanager.TaskmanagerApplication   : Starting TaskmanagerApplication using Java 21.0.10 with PID 5382 (/home/diego/dev/gestao-tarefas-com-acesso-seguro/target/classes started by diego in /home/diego/dev/gestao-tarefas-com-acesso-seguro)
+2026-06-01T20:50:26.569-03:00  INFO 5382 --- [taskmanager] [main] c.d.taskmanager.TaskmanagerApplication   : The following 1 profile is active: "dev"
+2026-06-01T20:50:33.491-03:00  INFO 5382 --- [taskmanager] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-01T20:50:33.939-03:00  INFO 5382 --- [taskmanager] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 405 ms. Found 4 JPA repository interfaces.
+2026-06-01T20:50:40.814-03:00  INFO 5382 --- [taskmanager] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-06-01T20:50:40.902-03:00  INFO 5382 --- [taskmanager] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-01T20:50:40.903-03:00  INFO 5382 --- [taskmanager] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.31]
+2026-06-01T20:50:41.590-03:00  INFO 5382 --- [taskmanager] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-06-01T20:50:41.591-03:00  INFO 5382 --- [taskmanager] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 14663 ms
+2026-06-01T20:50:44.105-03:00  INFO 5382 --- [taskmanager] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-06-01T20:50:44.441-03:00  INFO 5382 --- [taskmanager] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-06-01T20:50:44.609-03:00  INFO 5382 --- [taskmanager] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-06-01T20:50:46.133-03:00  INFO 5382 --- [taskmanager] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-01T20:50:46.241-03:00  INFO 5382 --- [taskmanager] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-01T20:50:47.411-03:00  INFO 5382 --- [taskmanager] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@608f310a
+2026-06-01T20:50:47.416-03:00  INFO 5382 --- [taskmanager] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-01T20:50:47.605-03:00  WARN 5382 --- [taskmanager] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-01T20:50:56.752-03:00  INFO 5382 --- [taskmanager] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-01T20:51:00.154-03:00  INFO 5382 --- [taskmanager] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-01T20:51:05.409-03:00  INFO 5382 --- [taskmanager] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-06-01T20:51:08.805-03:00  WARN 5382 --- [taskmanager] [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userController' defined in file [/home/diego/dev/gestao-tarefas-com-acesso-seguro/target/classes/com/diegodev/taskmanager/controllers/UserController.class]: Unsatisfied dependency expressed through constructor parameter 2: No qualifying bean of type 'org.slf4j.Logger' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2026-06-01T20:51:08.836-03:00  INFO 5382 --- [taskmanager] [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-06-01T20:51:08.878-03:00  INFO 5382 --- [taskmanager] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-01T20:51:08.981-03:00  INFO 5382 --- [taskmanager] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-06-01T20:51:22.033-03:00  INFO 5456 --- [taskmanager] [main] c.d.taskmanager.TaskmanagerApplication   : Starting TaskmanagerApplication using Java 21.0.10 with PID 5456 (/home/diego/dev/gestao-tarefas-com-acesso-seguro/target/classes started by diego in /home/diego/dev/gestao-tarefas-com-acesso-seguro)
+2026-06-01T20:51:22.050-03:00  INFO 5456 --- [taskmanager] [main] c.d.taskmanager.TaskmanagerApplication   : The following 1 profile is active: "dev"
+2026-06-01T20:51:27.966-03:00  INFO 5456 --- [taskmanager] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-01T20:51:28.358-03:00  INFO 5456 --- [taskmanager] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 354 ms. Found 4 JPA repository interfaces.
+2026-06-01T20:51:32.824-03:00  INFO 5456 --- [taskmanager] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-06-01T20:51:32.940-03:00  INFO 5456 --- [taskmanager] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-01T20:51:32.947-03:00  INFO 5456 --- [taskmanager] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.31]
+2026-06-01T20:51:33.594-03:00  INFO 5456 --- [taskmanager] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-06-01T20:51:33.595-03:00  INFO 5456 --- [taskmanager] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 11203 ms
+2026-06-01T20:51:35.717-03:00  INFO 5456 --- [taskmanager] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-06-01T20:51:36.281-03:00  INFO 5456 --- [taskmanager] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-06-01T20:51:36.407-03:00  INFO 5456 --- [taskmanager] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-06-01T20:51:37.809-03:00  INFO 5456 --- [taskmanager] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-01T20:51:37.951-03:00  INFO 5456 --- [taskmanager] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-01T20:51:39.019-03:00  INFO 5456 --- [taskmanager] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@7614378d
+2026-06-01T20:51:39.024-03:00  INFO 5456 --- [taskmanager] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-01T20:51:39.168-03:00  WARN 5456 --- [taskmanager] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-01T20:51:45.445-03:00  INFO 5456 --- [taskmanager] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-01T20:51:46.194-03:00  INFO 5456 --- [taskmanager] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-01T20:51:50.158-03:00  INFO 5456 --- [taskmanager] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-06-01T20:51:53.475-03:00  WARN 5456 --- [taskmanager] [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userController' defined in file [/home/diego/dev/gestao-tarefas-com-acesso-seguro/target/classes/com/diegodev/taskmanager/controllers/UserController.class]: Unsatisfied dependency expressed through constructor parameter 2: No qualifying bean of type 'org.slf4j.Logger' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2026-06-01T20:51:53.486-03:00  INFO 5456 --- [taskmanager] [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-06-01T20:51:53.489-03:00  INFO 5456 --- [taskmanager] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-01T20:51:53.509-03:00  INFO 5456 --- [taskmanager] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-06-01T20:51:53.512-03:00  INFO 5456 --- [taskmanager] [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-06-01T20:51:53.654-03:00  INFO 5456 --- [taskmanager] [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-06-01T20:51:53.889-03:00 ERROR 5456 --- [taskmanager] [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 2 of constructor in com.diegodev.taskmanager.controllers.UserController required a bean of type 'org.slf4j.Logger' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'org.slf4j.Logger' in your configuration.
+
