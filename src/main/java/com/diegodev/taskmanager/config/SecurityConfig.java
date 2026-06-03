@@ -57,7 +57,8 @@ public class SecurityConfig {
                             "/swagger-ui.html",
                             "/swagger-ui/**",
                             "/webjars/**",
-                            "/error"
+                            "/error",
+                            "/actuator/**"
                     ).permitAll();
                     authorize.requestMatchers(HttpMethod.POST,"/users").permitAll();
                     authorize.anyRequest().authenticated();
